@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+// Components
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,32 +12,10 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
+// Handlers
+import { handleGeneration } from "./handlers";
 
 export default function Home() {
-  const [formData, setFormData] = useState({
-    projectPrefix: "",
-    epic: "",
-    section: "",
-    id: "",
-    translations: "",
-  });
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Form data submitted:", formData);
-    // Here you would typically send the data to your backend or perform other actions
-  };
-
   return (
     <div className="flex min-h-screen items-center justify-center p-4">
       <Card className="w-full max-w-2xl">
@@ -48,7 +25,7 @@ export default function Home() {
             Enter project details and translations below.
           </CardDescription>
         </CardHeader>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleGeneration}>
           <CardContent>
             <div className="grid w-full items-center gap-4">
               <fieldset className="border rounded-md p-4">
@@ -62,19 +39,11 @@ export default function Home() {
                       id="projectPrefix"
                       name="projectPrefix"
                       placeholder="Enter project prefix"
-                      value={formData.projectPrefix}
-                      onChange={handleChange}
                     />
                   </div>
                   <div className="flex flex-col space-y-1.5">
                     <Label htmlFor="epic">Epic</Label>
-                    <Input
-                      id="epic"
-                      name="epic"
-                      placeholder="Enter epic"
-                      value={formData.epic}
-                      onChange={handleChange}
-                    />
+                    <Input id="epic" name="epic" placeholder="Enter epic" />
                   </div>
                   <div className="flex flex-col space-y-1.5">
                     <Label htmlFor="section">Section</Label>
@@ -82,36 +51,54 @@ export default function Home() {
                       id="section"
                       name="section"
                       placeholder="Enter section"
-                      value={formData.section}
-                      onChange={handleChange}
                     />
                   </div>
                 </div>
               </fieldset>
               <fieldset className="border rounded-md p-4">
                 <legend className="text-sm font-semibold px-2">
-                  Translation Details
+                  Translation 1
                 </legend>
                 <div className="flex flex-col space-y-4">
                   <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="id">ID</Label>
+                    <Label htmlFor="id1">ID</Label>
                     <Input
-                      id="id"
-                      name="id"
+                      id="id1"
+                      name="id1"
                       placeholder="Enter translation ID"
-                      value={formData.id}
-                      onChange={handleChange}
                     />
                   </div>
                   <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="translations">Translations</Label>
+                    <Label htmlFor="translation1">Translation 1</Label>
                     <Textarea
-                      id="translations"
-                      name="translations"
+                      id="translation1"
+                      name="translation1"
+                      placeholder="Enter translation"
+                      rows={3}
+                    />
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset className="border rounded-md p-4">
+                <legend className="text-sm font-semibold px-2">
+                  Translation 2
+                </legend>
+                <div className="flex flex-col space-y-4">
+                  <div className="flex flex-col space-y-1.5">
+                    <Label htmlFor="id2">ID</Label>
+                    <Input
+                      id="id2"
+                      name="id2"
+                      placeholder="Enter translation ID"
+                    />
+                  </div>
+                  <div className="flex flex-col space-y-1.5">
+                    <Label htmlFor="translation2">Translation 2</Label>
+                    <Textarea
+                      id="translation2"
+                      name="translation2"
                       placeholder="Enter translations"
-                      value={formData.translations}
-                      onChange={handleChange}
-                      rows={4}
+                      rows={3}
                     />
                   </div>
                 </div>
