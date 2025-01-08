@@ -1,7 +1,6 @@
 export const FIELD_NAMES = {
-  PROJECT_PREFIX: "projectPrefix",
+  TRANSLATIONS_PREFIX: "translationPrefix",
   EPIC: "epic",
-  SECTION: "section",
   ID1: "id1",
   TRANSLATION1: "translation1",
   ID2: "id2",

@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/card";
 // Handlers
 import { handleGeneration } from "./handlers";
+import { FIELD_NAMES } from "./constants";
 
 export default function Home() {
   return (
@@ -34,23 +35,21 @@ export default function Home() {
                 </legend>
                 <div className="flex flex-col space-y-4">
                   <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="projectPrefix">Project Prefix</Label>
+                    <Label htmlFor={FIELD_NAMES.TRANSLATIONS_PREFIX}>
+                      Project Prefix
+                    </Label>
                     <Input
-                      id="projectPrefix"
-                      name="projectPrefix"
+                      id={FIELD_NAMES.TRANSLATIONS_PREFIX}
+                      name={FIELD_NAMES.TRANSLATIONS_PREFIX}
                       placeholder="Enter project prefix"
                     />
                   </div>
                   <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="epic">Epic</Label>
-                    <Input id="epic" name="epic" placeholder="Enter epic" />
-                  </div>
-                  <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="section">Section</Label>
+                    <Label htmlFor={FIELD_NAMES.EPIC}>Epic</Label>
                     <Input
-                      id="section"
-                      name="section"
-                      placeholder="Enter section"
+                      id={FIELD_NAMES.EPIC}
+                      name={FIELD_NAMES.EPIC}
+                      placeholder="Enter epic"
                     />
                   </div>
                 </div>
