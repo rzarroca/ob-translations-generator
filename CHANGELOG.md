@@ -7,8 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Improve UI for many translations feature
 - Posibility to remove translations feature
+
+## [0.0.6] - 2025-01-09
+
+### Added
+
+- Improve UI for many translations feature
 
 ## [0.0.5] - 2025-01-09
 

@@ -14,8 +14,8 @@ export default function Home() {
   const { counter, handleAddTranslation } = useCounter();
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-4">
-      <Card className="w-full max-w-2xl">
+    <div className="flex min-h-screen items-start p-4">
+      <Card className="w-full">
         <Header />
         <form onSubmit={handleGeneration}>
           <CardContent>

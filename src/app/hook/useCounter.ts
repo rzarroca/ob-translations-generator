@@ -5,7 +5,10 @@ export const useCounter = () => {
   const [counter, setCounter] = useState<number>(1);
 
   const handleAddTranslation = useCallback(
-    () => setCounter((prev) => prev + 1),
+    (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      e.preventDefault();
+      setCounter((prev) => prev + 1);
+    },
     []
   );
 

@@ -10,7 +10,7 @@ import { FORBID_SEPARATORS_REGEX } from "../constants";
 import { APP_TRANSLATIONS } from "../translations";
 
 export const TranslationFields = ({ counter }: { counter: number }) => (
-  <>
+  <div className="grid grid-cols-96 gap-4">
     {Array.from({ length: counter }).map((_, index) => (
       <FieldSet key={index} legend={`Translation ${index + 1}`}>
         <FieldWrapper>
@@ -34,5 +34,5 @@ export const TranslationFields = ({ counter }: { counter: number }) => (
         </FieldWrapper>
       </FieldSet>
     ))}
-  </>
+  </div>
 );
