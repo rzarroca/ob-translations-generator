@@ -7,9 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Hold project values feature
 - Improve UI for many translations feature
 - Posibility to remove translations feature
+
+## [0.0.5] - 2025-01-09
+
+### Added
+
+- Remember project values feature
 
 ## [0.0.4] - 2025-01-09
 
