@@ -22,14 +22,14 @@ export function handleGeneration(e: React.FormEvent) {
 function parseForm(e: React.FormEvent) {
   const formData = new FormData(e.target as HTMLFormElement);
 
-  const prefix = (formData.get(FIELD_NAMES.TRANSLATIONS_PREFIX) ??
-    "") as string;
-  const epic = (formData.get(FIELD_NAMES.EPIC) ?? "") as string;
+  const prefix = formData.get(FIELD_NAMES.TRANSLATIONS_PREFIX) as string;
+  const epic = formData.get(FIELD_NAMES.EPIC) as string;
 
   formData.delete(FIELD_NAMES.TRANSLATIONS_PREFIX);
   formData.delete(FIELD_NAMES.EPIC);
 
   const translations = formData.entries();
+  debugger;
   return { prefix, epic, translations };
 }
 

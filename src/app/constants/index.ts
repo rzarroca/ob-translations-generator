@@ -7,3 +7,5 @@ export const FIELD_NAMES = {
   TRANSLATION2: "translation2",
   ID3: "id3",
 };
+
+export const FORBID_SEPARATORS_REGEX = "^[^\\s]+$";
