@@ -4,27 +4,26 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { FieldSet } from "@/components/fieldset";
 import { FieldWrapper } from "@/components/fieldWrapper";
-// Constants
-import { FORBID_SEPARATORS_REGEX } from "../constants";
 // Translations
-import { APP_TRANSLATIONS } from "../translations";
+import { TRANSLATIONS } from "../translations";
 
 export const TranslationFields = ({ counter }: { counter: number }) => (
   <div className="grid grid-cols-96 gap-4">
     {Array.from({ length: counter }).map((_, index) => (
       <FieldSet key={index} legend={`Translation ${index + 1}`}>
         <FieldWrapper>
-          <Label htmlFor={`id${index}`}>ID</Label>
+          <Label htmlFor={`id${index}`}>{TRANSLATIONS.ID}</Label>
           <Input
             id={`id${index}`}
             name={`id${index}`}
             placeholder="Enter translation ID"
-            pattern={FORBID_SEPARATORS_REGEX}
-            title={APP_TRANSLATIONS.SEPARATORS_NOT_ALLOWED}
+            title={TRANSLATIONS.PARSE_INDICATION}
           />
         </FieldWrapper>
         <FieldWrapper>
-          <Label htmlFor={`translation${index}`}>Translation {index + 1}</Label>
+          <Label htmlFor={`translation${index}`}>
+            {TRANSLATIONS.TRANSLATION}
+          </Label>
           <Textarea
             id={`translation${index}`}
             name={`translation${index}`}

@@ -1,6 +1,8 @@
-export const FIELD_NAMES = {
+const FIELD_NAMES = {
   TRANSLATIONS_PREFIX: "translationPrefix",
   EPIC: "epic",
 };
 
-export const FORBID_SEPARATORS_REGEX = "^[^\\s]+$";
+const FORBID_SEPARATORS_REGEX = "^[^\\s]+$";
+
+export { FIELD_NAMES, FORBID_SEPARATORS_REGEX };

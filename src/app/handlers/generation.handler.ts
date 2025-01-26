@@ -2,8 +2,12 @@
 import { writeFile, utils as xlsxUtils } from "xlsx";
 // Constants
 import { FIELD_NAMES } from "../constants";
+// Utils
+import { downloadFile } from "@/lib/utils";
 
 type JsonObject = Record<string, string>;
+
+type DownloadProps = { json: JsonObject; epic: string };
 
 export function handleGeneration(e: React.FormEvent) {
   e.preventDefault();
@@ -12,11 +16,12 @@ export function handleGeneration(e: React.FormEvent) {
     prefix,
     translations,
   });
-  downloadJson({ json, epic });
+  downloadPoEditorJson({ json, epic });
   downloadXLSXFile({
     json,
     epic,
   });
+  downloadTranslationIds({ epic, translations });
 }
 
 function parseForm(e: React.FormEvent) {
@@ -30,8 +35,8 @@ function parseForm(e: React.FormEvent) {
   formData.delete(FIELD_NAMES.TRANSLATIONS_PREFIX);
   formData.delete(FIELD_NAMES.EPIC);
 
-  const translations = formData.entries();
-  debugger;
+  const translations = Array.from(formData.entries());
+
   return { prefix, epic, translations };
 }
 
@@ -40,13 +45,13 @@ function extractJsonObject({
   translations,
 }: {
   prefix: string;
-  translations: FormDataIterator<[string, FormDataEntryValue]>;
+  translations: Array<[string, FormDataEntryValue]>;
 }) {
   let currentKey = "";
 
   return translations.reduce<JsonObject>((acc, [key, value]) => {
     if (key.includes("id")) {
-      currentKey = `${prefix}.${value}`;
+      currentKey = `${prefix}.${formatId(value)}`;
     } else {
       acc[currentKey] = value.toString();
     }
@@ -55,18 +60,15 @@ function extractJsonObject({
   }, {});
 }
 
-function downloadJson({ json, epic }: { json: JsonObject; epic: string }) {
-  const blob = new Blob([JSON.stringify(json, null, 2)], {
-    type: "application/json",
-  });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `${epic}-translations.json`;
-  a.click();
+function formatId(value: FormDataEntryValue) {
+  return value.toString().trim().replace(/\s/g, ".");
 }
 
-function downloadXLSXFile({ json, epic }: { json: JsonObject; epic: string }) {
+function downloadPoEditorJson({ json, epic }: DownloadProps) {
+  downloadFile([JSON.stringify(json, null, 2)], `${epic}-translations.json`);
+}
+
+function downloadXLSXFile({ json, epic }: DownloadProps) {
   const data = Object.entries(json).map(([key, translation]) => ({
     epic,
     key,
@@ -76,4 +78,28 @@ function downloadXLSXFile({ json, epic }: { json: JsonObject; epic: string }) {
   const workbook = xlsxUtils.book_new();
   xlsxUtils.book_append_sheet(workbook, worksheet, epic);
   writeFile(workbook, `${epic}-translations.xlsx`);
+}
+
+type DownloadTranslationFileProps = {
+  epic: string;
+  translations: Array<[string, FormDataEntryValue]>;
+};
+
+function downloadTranslationIds({
+  epic,
+  translations,
+}: DownloadTranslationFileProps) {
+  const filteredTranslations = translations
+    .filter(([key]) => key.includes("id"))
+    .map(([, value]) => formatTranslation(value));
+
+  const contentFile = `export const ${epic.toUpperCase()}_TRANSLATIONS = {
+  ${filteredTranslations.map((translation) => `\t${translation}`).join(",\n")}
+  }`;
+
+  downloadFile([contentFile], `${epic}-translations.ts`);
+}
+
+function formatTranslation(value: FormDataEntryValue) {
+  return value.toString().trim().toUpperCase().replace(/\s/g, "_");
 }

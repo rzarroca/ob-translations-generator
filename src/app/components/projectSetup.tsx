@@ -16,7 +16,7 @@ import { FIELD_NAMES, FORBID_SEPARATORS_REGEX } from "../constants";
 // Handlers
 import { handleLoadFields, handleStoreField } from "../handlers";
 // Translations
-import { APP_TRANSLATIONS } from "../translations";
+import { TRANSLATIONS } from "../translations";
 
 export const ProjectSetup = () => {
   useLayoutEffect(() => {
@@ -41,7 +41,7 @@ export const ProjectSetup = () => {
                   pattern={FORBID_SEPARATORS_REGEX}
                   placeholder="Enter project prefix"
                   required
-                  title={APP_TRANSLATIONS.SEPARATORS_NOT_ALLOWED}
+                  title={TRANSLATIONS.SEPARATORS_NOT_ALLOWED}
                 />
               </FieldWrapper>
               <FieldWrapper>
@@ -53,7 +53,7 @@ export const ProjectSetup = () => {
                   pattern={FORBID_SEPARATORS_REGEX}
                   placeholder="Enter epic"
                   required
-                  title={APP_TRANSLATIONS.SEPARATORS_NOT_ALLOWED}
+                  title={TRANSLATIONS.SEPARATORS_NOT_ALLOWED}
                 />
               </FieldWrapper>
             </FieldSet>
