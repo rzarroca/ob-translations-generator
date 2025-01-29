@@ -9,50 +9,60 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Posibility to remove translations feature
 
-## [0.0.8] - 2025-01-29
+## [1.0.0] - 2025-01-29
+
+### Added
+
+- favicon.ico
+
+### Fixed
+
+- Initial load of project detail data
+
+## [0.7.1] - 2025-01-29
 
 ### Fixed
 
 - Generated prefix for downloads
 
-## [0.0.7] - 2025-01-26
+## [0.7.0] - 2025-01-26
 
 ### Added
 
 - translations.ts download
 - Auto formatting for ids
 
-## [0.0.6] - 2025-01-09
+## [0.6.0] - 2025-01-09
 
 ### Added
 
 - Improve UI for many translations feature
 
-## [0.0.5] - 2025-01-09
+## [0.5.0] - 2025-01-09
 
 ### Added
 
 - Remember project values feature
 
-## [0.0.4] - 2025-01-09
+## [0.4.0] - 2025-01-09
 
 ### Added
 
 - Force patters and required fields feature
 
-## [0.0.3] - 2025-01-08
+## [0.3.0] - 2025-01-08
 
 ### Added
 
 - XLSX download feature
 
-## [0.0.2] - 2025-01-08
+## [0.2.0] - 2025-01-08
 
 ### Added
 
 - JSON download feature
 
-## [0.0.1] - 2025-01-08
+## [0.1.0] - 2025-01-08
 
 ### Added
 

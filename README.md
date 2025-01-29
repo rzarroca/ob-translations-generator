@@ -8,6 +8,7 @@ This is an open source project. Please, feel free to fork it or make your own PR
 
 - Generation of a JSON file with the translations formatted to poEditor upload requirements.
 - Generation of a XLSX file with the translations and other fields needed by the translation team.
+- Generation of a TS file that can be directly pasted in the /translations folder of the current page.
 
 ## Known Issues
 

@@ -1,0 +1,48 @@
+// Vendors
+import { useLayoutEffect } from "react";
+// Components
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { FieldSet } from "@/components/fieldset";
+import { FieldWrapper } from "@/components/fieldWrapper";
+// Constants
+import { FIELD_NAMES, FORBID_SEPARATORS_REGEX } from "../constants";
+// Handlers
+import { handleLoadFields, handleStoreField } from "../handlers";
+// Translations
+import { TRANSLATIONS } from "../translations";
+
+export const SetupFields = () => {
+  useLayoutEffect(() => {
+    handleLoadFields(Object.values(FIELD_NAMES));
+  }, []);
+
+  return (
+    <FieldSet legend="Customize Project Data">
+      <FieldWrapper>
+        <Label htmlFor={FIELD_NAMES.TRANSLATIONS_PREFIX}>Project Prefix</Label>
+        <Input
+          id={FIELD_NAMES.TRANSLATIONS_PREFIX}
+          name={FIELD_NAMES.TRANSLATIONS_PREFIX}
+          onBlur={handleStoreField}
+          pattern={FORBID_SEPARATORS_REGEX}
+          placeholder="Enter project prefix"
+          required
+          title={TRANSLATIONS.SEPARATORS_NOT_ALLOWED}
+        />
+      </FieldWrapper>
+      <FieldWrapper>
+        <Label htmlFor={FIELD_NAMES.EPIC}>Epic</Label>
+        <Input
+          id={FIELD_NAMES.EPIC}
+          name={FIELD_NAMES.EPIC}
+          onBlur={handleStoreField}
+          pattern={FORBID_SEPARATORS_REGEX}
+          placeholder="Enter epic"
+          required
+          title={TRANSLATIONS.SEPARATORS_NOT_ALLOWED}
+        />
+      </FieldWrapper>
+    </FieldSet>
+  );
+};
