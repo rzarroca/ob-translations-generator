@@ -21,16 +21,17 @@ export function handleGeneration(e: React.FormEvent) {
     json,
     epic,
   });
-  downloadTranslationIds({ epic, translations });
+  downloadTranslationIds({ epic, prefix, translations });
 }
 
 function parseForm(e: React.FormEvent) {
   const formData = new FormData(e.target as HTMLFormElement);
 
+  const epic = formData.get(FIELD_NAMES.EPIC)?.toString() as string;
   const prefix = formData
     .get(FIELD_NAMES.TRANSLATIONS_PREFIX)
-    ?.toString() as string;
-  const epic = formData.get(FIELD_NAMES.EPIC)?.toString() as string;
+    ?.toString()
+    .concat(`.${epic}`) as string;
 
   formData.delete(FIELD_NAMES.TRANSLATIONS_PREFIX);
   formData.delete(FIELD_NAMES.EPIC);
@@ -51,7 +52,7 @@ function extractJsonObject({
 
   return translations.reduce<JsonObject>((acc, [key, value]) => {
     if (key.includes("id")) {
-      currentKey = `${prefix}.${formatId(value)}`;
+      currentKey = `${prefix}.${formatJsonId(value)}`;
     } else {
       acc[currentKey] = value.toString();
     }
@@ -60,7 +61,7 @@ function extractJsonObject({
   }, {});
 }
 
-function formatId(value: FormDataEntryValue) {
+function formatJsonId(value: FormDataEntryValue) {
   return value.toString().trim().replace(/\s/g, ".");
 }
 
@@ -82,24 +83,33 @@ function downloadXLSXFile({ json, epic }: DownloadProps) {
 
 type DownloadTranslationFileProps = {
   epic: string;
+  prefix: string;
   translations: Array<[string, FormDataEntryValue]>;
 };
 
 function downloadTranslationIds({
   epic,
+  prefix,
   translations,
 }: DownloadTranslationFileProps) {
-  const filteredTranslations = translations
-    .filter(([key]) => key.includes("id"))
-    .map(([, value]) => formatTranslation(value));
+  let contentFile =
+    `const DOMAIN = '${prefix}.';\n\n` +
+    `const ${epic.toUpperCase()}_TRANSLATIONS = {\n`;
 
-  const contentFile = `export const ${epic.toUpperCase()}_TRANSLATIONS = {
-  ${filteredTranslations.map((translation) => `\t${translation}`).join(",\n")}
-  }`;
+  let currentTranslation = "";
 
+  for (const [key, value] of translations) {
+    if (key.includes("id")) {
+      currentTranslation = formatTranslationId(value);
+    } else {
+      contentFile += `\t${currentTranslation}: \`\${DOMAIN}${value}\`,\n`;
+    }
+  }
+
+  contentFile += "}";
   downloadFile([contentFile], `${epic}-translations.ts`);
 }
 
-function formatTranslation(value: FormDataEntryValue) {
+function formatTranslationId(value: FormDataEntryValue): string {
   return value.toString().trim().toUpperCase().replace(/\s/g, "_");
 }

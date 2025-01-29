@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Posibility to remove translations feature
 
+## [0.0.8] - 2025-01-29
+
+### Fixed
+
+- Generated prefix for downloads
+
 ## [0.0.7] - 2025-01-26
 
 ### Added
