@@ -9,12 +9,14 @@ import { TranslationFields } from "./components/translationFields";
 import { handleGeneration } from "./handlers";
 // Hooks
 import { useCounter } from "./hook/useCounter";
+// Translations
+import { TRANSLATIONS } from "./translations";
 
 export default function Home() {
   const { counter, handleAddTranslation } = useCounter();
 
   return (
-    <div className="flex min-h-screen items-start p-4">
+    <main className="flex min-h-screen items-start p-4">
       <Card className="w-full">
         <Header />
         <form onSubmit={handleGeneration}>
@@ -27,15 +29,15 @@ export default function Home() {
                 variant="secondary"
                 onClick={handleAddTranslation}
               >
-                Add Translation
+                {TRANSLATIONS.ADD}
               </Button>
             </div>
           </CardContent>
           <CardFooter>
-            <Button type="submit">Download Files</Button>
+            <Button type="submit">{TRANSLATIONS.DOWNLOAD}</Button>
           </CardFooter>
         </form>
       </Card>
-    </div>
+    </main>
   );
 }
