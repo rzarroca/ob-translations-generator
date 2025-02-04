@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Posibility to remove translations feature
 
+## [1.1.0] - 2025-02-04
+
+### Added
+
+- Jira component input
+
 ## [1.0.0] - 2025-01-29
 
 ### Added

@@ -5,26 +5,39 @@ import { FIELD_NAMES } from "../constants";
 // Utils
 import { downloadFile } from "@/lib/utils";
 
+type ParseFormReturn = {
+  epic: string;
+  jira: string;
+  prefix: string;
+  translations: Array<[string, FormDataEntryValue]>;
+};
+
 type JsonObject = Record<string, string>;
 
-type DownloadProps = { json: JsonObject; epic: string };
+type ExtractJsonData = { json: JsonObject };
+
+type PoDownloadProps = Pick<ParseFormReturn, "epic"> & ExtractJsonData;
+type XlsxDownloadProps = Pick<ParseFormReturn, "epic" | "jira"> &
+  ExtractJsonData;
 
 export function handleGeneration(e: React.FormEvent) {
   e.preventDefault();
-  const { prefix, epic, translations } = parseForm(e);
+  const { epic, jira, prefix, translations } = parseForm(e);
   const json = extractJsonObject({
     prefix,
     translations,
   });
-  downloadPoEditorJson({ json, epic });
+
+  downloadPoEditorJson({ epic, json });
   downloadXLSXFile({
-    json,
     epic,
+    jira,
+    json,
   });
   downloadTranslationIds({ epic, prefix, translations });
 }
 
-function parseForm(e: React.FormEvent) {
+function parseForm(e: React.FormEvent): ParseFormReturn {
   const formData = new FormData(e.target as HTMLFormElement);
 
   const epic = formData.get(FIELD_NAMES.EPIC)?.toString() as string;
@@ -32,13 +45,15 @@ function parseForm(e: React.FormEvent) {
     .get(FIELD_NAMES.TRANSLATIONS_PREFIX)
     ?.toString()
     .concat(`.${epic}`) as string;
+  const jira = formData.get(FIELD_NAMES.JIRA)?.toString() as string;
 
-  formData.delete(FIELD_NAMES.TRANSLATIONS_PREFIX);
-  formData.delete(FIELD_NAMES.EPIC);
+  for (const fieldName of Object.values(FIELD_NAMES)) {
+    formData.delete(fieldName);
+  }
 
   const translations = Array.from(formData.entries());
 
-  return { prefix, epic, translations };
+  return { epic, jira, prefix, translations };
 }
 
 function extractJsonObject({
@@ -65,19 +80,22 @@ function formatJsonId(value: FormDataEntryValue) {
   return value.toString().trim().replace(/\s/g, ".");
 }
 
-function downloadPoEditorJson({ json, epic }: DownloadProps) {
+function downloadPoEditorJson({ json, epic }: PoDownloadProps) {
   downloadFile([JSON.stringify(json, null, 2)], `${epic}-translations.json`);
 }
 
-function downloadXLSXFile({ json, epic }: DownloadProps) {
+function downloadXLSXFile({ json, jira, epic }: XlsxDownloadProps) {
   const data = Object.entries(json).map(([key, translation]) => ({
+    jira,
     epic,
     key,
     translation,
   }));
+
   const worksheet = xlsxUtils.json_to_sheet(data);
   const workbook = xlsxUtils.book_new();
-  xlsxUtils.book_append_sheet(workbook, worksheet, epic);
+  xlsxUtils.book_append_sheet(workbook, worksheet, jira);
+
   writeFile(workbook, `${epic}-translations.xlsx`);
 }
 

@@ -20,25 +20,37 @@ export const SetupFields = () => {
   return (
     <FieldSet legend="Customize Project Data">
       <FieldWrapper>
-        <Label htmlFor={FIELD_NAMES.TRANSLATIONS_PREFIX}>Project Prefix</Label>
+        <Label htmlFor={FIELD_NAMES.JIRA}>{TRANSLATIONS.JIRA_LABEL}</Label>
+        <Input
+          id={FIELD_NAMES.JIRA}
+          name={FIELD_NAMES.JIRA}
+          onBlur={handleStoreField}
+          placeholder={TRANSLATIONS.JIRA_PLACEHOLDER}
+          required
+        />
+      </FieldWrapper>
+      <FieldWrapper>
+        <Label htmlFor={FIELD_NAMES.TRANSLATIONS_PREFIX}>
+          {TRANSLATIONS.PREFIX_LABEL}
+        </Label>
         <Input
           id={FIELD_NAMES.TRANSLATIONS_PREFIX}
           name={FIELD_NAMES.TRANSLATIONS_PREFIX}
           onBlur={handleStoreField}
           pattern={FORBID_SEPARATORS_REGEX}
-          placeholder="Enter project prefix"
+          placeholder={TRANSLATIONS.PREFIX_PLACEHOLDER}
           required
           title={TRANSLATIONS.SEPARATORS_NOT_ALLOWED}
         />
       </FieldWrapper>
       <FieldWrapper>
-        <Label htmlFor={FIELD_NAMES.EPIC}>Epic</Label>
+        <Label htmlFor={FIELD_NAMES.EPIC}>{TRANSLATIONS.EPIC_LABEL}</Label>
         <Input
           id={FIELD_NAMES.EPIC}
           name={FIELD_NAMES.EPIC}
           onBlur={handleStoreField}
           pattern={FORBID_SEPARATORS_REGEX}
-          placeholder="Enter epic"
+          placeholder={TRANSLATIONS.EPIC_PLACEHOLDER}
           required
           title={TRANSLATIONS.SEPARATORS_NOT_ALLOWED}
         />
