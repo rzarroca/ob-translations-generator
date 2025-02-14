@@ -114,13 +114,13 @@ function downloadTranslationIds({
     `const DOMAIN = '${prefix}.';\n\n` +
     `const ${epic.toUpperCase()}_TRANSLATIONS = {\n`;
 
-  let currentTranslation = "";
-
   for (const [key, value] of translations) {
+    debugger;
     if (key.includes("id")) {
-      currentTranslation = formatTranslationId(value);
+      contentFile += `\t${formatTranslationId(
+        value
+      )}: \`\${DOMAIN}${formatJsonId(value)}\`,\n`;
     } else {
-      contentFile += `\t${currentTranslation}: \`\${DOMAIN}${value}\`,\n`;
     }
   }
 
