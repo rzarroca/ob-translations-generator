@@ -1,7 +1,7 @@
 // Vendors
 import { useCallback, useState } from "react";
 
-export const useCounter = () => {
+export const useHome = () => {
   const [counter, setCounter] = useState<number>(1);
 
   const handleAddTranslation = useCallback(

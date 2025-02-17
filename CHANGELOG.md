@@ -7,7 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Posibility to remove translations feature
+- Possibility to remove translations feature
+
+## [1.2.0] - 2025-02-17
+
+### Added
+
+- Parse translations id to middle lines
+- Parse new line on translations
 
 ## [1.1.2] - 2025-02-14
 

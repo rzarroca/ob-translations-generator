@@ -8,12 +8,12 @@ import { TranslationFields } from "./components/translationFields";
 // Handlers
 import { handleGeneration } from "./handlers";
 // Hooks
-import { useCounter } from "./hook/useCounter";
+import { useHome } from "./hooks";
 // Translations
 import { TRANSLATIONS } from "./translations";
 
 export default function Home() {
-  const { counter, handleAddTranslation } = useCounter();
+  const { counter, handleAddTranslation } = useHome();
 
   return (
     <main className="flex min-h-screen items-start p-4">

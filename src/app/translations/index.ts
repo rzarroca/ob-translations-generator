@@ -6,7 +6,7 @@ export const TRANSLATIONS = {
   ID: "ID",
   JIRA_LABEL: "Jira Component",
   JIRA_PLACEHOLDER: "Enter Jira component",
-  PARSE_INDICATION: "Whitespaces will be parsed as dots",
+  PARSE_INDICATION: "Whitespaces will be parsed as middle lines",
   PREFIX_LABEL: "Project Prefix",
   PREFIX_PLACEHOLDER: "Enter project prefix",
   SEPARATORS_NOT_ALLOWED: "No whitespaces or separators allowed",

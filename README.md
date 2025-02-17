@@ -8,7 +8,7 @@ This is an open source project. Please, feel free to fork it or make your own PR
 
 - Generation of a JSON file with the translations formatted to poEditor upload requirements.
 - Generation of a XLSX file with the translations and other fields needed by the translation team.
-- Generation of a TS file that can be directly pasted in the /translations folder of the current page.
+- Generation of a TS file that can be directly pasted in the `/translations` folder of the current page.
 
 ## Known Issues
 
@@ -23,15 +23,7 @@ Check CHANGELOG for the list of changes and upcoming updates.
 First, run the development server:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
 pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.

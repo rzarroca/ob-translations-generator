@@ -2,28 +2,27 @@
 import { writeFile, utils as xlsxUtils } from "xlsx";
 // Constants
 import { FIELD_NAMES } from "../constants";
+// Types
+import {
+  DownloadTranslationFileProps,
+  ExtractedFormData,
+  GenerateJsonProps,
+  JsonObject,
+  PoDownloadProps,
+  XlsxDownloadProps,
+} from "./types";
 // Utils
 import { downloadFile } from "@/lib/utils";
-
-type ParseFormReturn = {
-  epic: string;
-  jira: string;
-  prefix: string;
-  translations: Array<[string, FormDataEntryValue]>;
-};
-
-type JsonObject = Record<string, string>;
-
-type ExtractJsonData = { json: JsonObject };
-
-type PoDownloadProps = Pick<ParseFormReturn, "epic"> & ExtractJsonData;
-type XlsxDownloadProps = Pick<ParseFormReturn, "epic" | "jira"> &
-  ExtractJsonData;
+import {
+  newLineToBr,
+  whiteSpaceToMiddleLine,
+  witheSpacesToUnderLineAndUpperCase,
+} from "./utils";
 
 export function handleGeneration(e: React.FormEvent) {
   e.preventDefault();
-  const { epic, jira, prefix, translations } = parseForm(e);
-  const json = extractJsonObject({
+  const { epic, jira, prefix, translations } = extractSetupAndTranslations(e);
+  const json = generateJson({
     prefix,
     translations,
   });
@@ -37,7 +36,7 @@ export function handleGeneration(e: React.FormEvent) {
   downloadTranslationIds({ epic, prefix, translations });
 }
 
-function parseForm(e: React.FormEvent): ParseFormReturn {
+function extractSetupAndTranslations(e: React.FormEvent): ExtractedFormData {
   const formData = new FormData(e.target as HTMLFormElement);
 
   const epic = formData.get(FIELD_NAMES.EPIC)?.toString() as string;
@@ -52,32 +51,21 @@ function parseForm(e: React.FormEvent): ParseFormReturn {
   }
 
   const translations = Array.from(formData.entries());
-
   return { epic, jira, prefix, translations };
 }
 
-function extractJsonObject({
-  prefix,
-  translations,
-}: {
-  prefix: string;
-  translations: Array<[string, FormDataEntryValue]>;
-}) {
+function generateJson({ prefix, translations }: GenerateJsonProps) {
   let currentKey = "";
 
   return translations.reduce<JsonObject>((acc, [key, value]) => {
     if (key.includes("id")) {
-      currentKey = `${prefix}.${formatJsonId(value)}`;
+      currentKey = `${prefix}.${whiteSpaceToMiddleLine(value)}`;
     } else {
-      acc[currentKey] = value.toString();
+      acc[currentKey] = newLineToBr(value.toString());
     }
 
     return acc;
   }, {});
-}
-
-function formatJsonId(value: FormDataEntryValue) {
-  return value.toString().trim().replace(/\s/g, ".");
 }
 
 function downloadPoEditorJson({ json, epic }: PoDownloadProps) {
@@ -99,12 +87,6 @@ function downloadXLSXFile({ json, jira, epic }: XlsxDownloadProps) {
   writeFile(workbook, `${epic}-translations.xlsx`);
 }
 
-type DownloadTranslationFileProps = {
-  epic: string;
-  prefix: string;
-  translations: Array<[string, FormDataEntryValue]>;
-};
-
 function downloadTranslationIds({
   epic,
   prefix,
@@ -115,19 +97,13 @@ function downloadTranslationIds({
     `const ${epic.toUpperCase()}_TRANSLATIONS = {\n`;
 
   for (const [key, value] of translations) {
-    debugger;
     if (key.includes("id")) {
-      contentFile += `\t${formatTranslationId(
+      contentFile += `\t${witheSpacesToUnderLineAndUpperCase(
         value
-      )}: \`\${DOMAIN}${formatJsonId(value)}\`,\n`;
-    } else {
+      )}: \`\${DOMAIN}${whiteSpaceToMiddleLine(value)}\`,\n`;
     }
   }
 
   contentFile += "}";
   downloadFile([contentFile], `${epic}-translations.ts`);
-}
-
-function formatTranslationId(value: FormDataEntryValue): string {
-  return value.toString().trim().toUpperCase().replace(/\s/g, "_");
 }
