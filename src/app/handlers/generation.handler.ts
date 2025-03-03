@@ -15,6 +15,7 @@ import {
 import { downloadFile } from "@/lib/utils";
 import {
   newLineToBr,
+  whiteSpaceToCamelCase,
   whiteSpaceToMiddleLine,
   witheSpacesToUnderLineAndUpperCase,
 } from "./utils";
@@ -43,7 +44,7 @@ function extractSetupAndTranslations(e: React.FormEvent): ExtractedFormData {
   const prefix = formData
     .get(FIELD_NAMES.TRANSLATIONS_PREFIX)
     ?.toString()
-    .concat(`.${epic}`) as string;
+    .concat(`.${whiteSpaceToCamelCase(epic)}`) as string;
   const jira = formData.get(FIELD_NAMES.JIRA)?.toString() as string;
 
   for (const fieldName of Object.values(FIELD_NAMES)) {
@@ -69,7 +70,10 @@ function generateJson({ prefix, translations }: GenerateJsonProps) {
 }
 
 function downloadPoEditorJson({ json, epic }: PoDownloadProps) {
-  downloadFile([JSON.stringify(json, null, 2)], `${epic}-translations.json`);
+  downloadFile(
+    [JSON.stringify(json, null, 2)],
+    `${whiteSpaceToMiddleLine(epic)}-translations.json`
+  );
 }
 
 function downloadXLSXFile({ json, jira, epic }: XlsxDownloadProps) {
@@ -84,7 +88,7 @@ function downloadXLSXFile({ json, jira, epic }: XlsxDownloadProps) {
   const workbook = xlsxUtils.book_new();
   xlsxUtils.book_append_sheet(workbook, worksheet, jira);
 
-  writeFile(workbook, `${epic}-translations.xlsx`);
+  writeFile(workbook, `${whiteSpaceToMiddleLine(epic)}-translations.xlsx`);
 }
 
 function downloadTranslationIds({
@@ -94,7 +98,9 @@ function downloadTranslationIds({
 }: DownloadTranslationFileProps) {
   let contentFile =
     `const DOMAIN = '${prefix}.';\n\n` +
-    `const ${epic.toUpperCase()}_TRANSLATIONS = {\n`;
+    `const ${witheSpacesToUnderLineAndUpperCase(
+      epic
+    ).toUpperCase()}_TRANSLATIONS = {\n`;
 
   for (const [key, value] of translations) {
     if (key.includes("id")) {
@@ -105,5 +111,8 @@ function downloadTranslationIds({
   }
 
   contentFile += "}";
-  downloadFile([contentFile], `${epic}-translations.ts`);
+  downloadFile(
+    [contentFile],
+    `${whiteSpaceToMiddleLine(epic)}-translations.ts`
+  );
 }

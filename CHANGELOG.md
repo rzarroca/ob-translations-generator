@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Possibility to remove translations feature
 
+## [1.3.0] - 2025-03-03
+
+### Added
+
+- Parse improvements on epic field
+- Link to the repository's project
+
 ## [1.2.0] - 2025-02-17
 
 ### Added

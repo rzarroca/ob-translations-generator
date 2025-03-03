@@ -17,7 +17,7 @@ export const TranslationFields = ({ counter }: { counter: number }) => (
             id={`id${index}`}
             name={`id${index}`}
             placeholder="Enter translation ID"
-            title={TRANSLATIONS.PARSE_INDICATION}
+            title={TRANSLATIONS.MIDDLE_LINE_INDICATION}
           />
         </FieldWrapper>
         <FieldWrapper>

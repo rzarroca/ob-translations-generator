@@ -49,10 +49,9 @@ export const SetupFields = () => {
           id={FIELD_NAMES.EPIC}
           name={FIELD_NAMES.EPIC}
           onBlur={handleStoreField}
-          pattern={FORBID_SEPARATORS_REGEX}
           placeholder={TRANSLATIONS.EPIC_PLACEHOLDER}
           required
-          title={TRANSLATIONS.SEPARATORS_NOT_ALLOWED}
+          title={TRANSLATIONS.CAMEL_CASE_INDICATION}
         />
       </FieldWrapper>
     </FieldSet>
