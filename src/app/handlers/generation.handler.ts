@@ -60,7 +60,7 @@ function generateJson({ prefix, translations }: GenerateJsonProps) {
 
   return translations.reduce<JsonObject>((acc, [key, value]) => {
     if (key.includes("id")) {
-      currentKey = `${prefix}.${whiteSpaceToMiddleLine(value)}`;
+      currentKey = `${prefix}.${whiteSpaceToCamelCase(value)}`;
     } else {
       acc[currentKey] = newLineToBr(value.toString());
     }
@@ -106,7 +106,7 @@ function downloadTranslationIds({
     if (key.includes("id")) {
       contentFile += `\t${witheSpacesToUnderLineAndUpperCase(
         value
-      )}: \`\${DOMAIN}${whiteSpaceToMiddleLine(value)}\`,\n`;
+      )}: \`\${DOMAIN}${whiteSpaceToCamelCase(value)}\`,\n`;
     }
   }
 
